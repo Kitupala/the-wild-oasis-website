@@ -3,6 +3,11 @@ import Navigation from "@/app/_components/Navigation";
 
 import "@/app/_styles/globals.css";
 
+import { Josefin_Sans } from "next/font/google";
+
+const josefin = Josefin_Sans({ subsets: ["latin"], display: "swap" });
+console.log(josefin);
+
 export const metadata = {
   title: {
     template: "%s / The Wild Oasis",
@@ -19,7 +24,9 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-primary-950 text-primary-100">
+      <body
+        className={`${josefin.className} min-h-screen bg-primary-950 text-primary-100`}
+      >
         <header>
           <Logo />
           <Navigation />
