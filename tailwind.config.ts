@@ -36,10 +36,6 @@ const config: Config = {
           950: "#382814",
         },
       },
-      // colors: {
-      //   background: "var(--background)",
-      //   foreground: "var(--foreground)",
-      // },
     },
   },
   plugins: [],
