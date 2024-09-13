@@ -10,7 +10,7 @@ export const metadata = {
     default: "Welcome / The Wild Oasis",
   },
   description:
-    "Luxurious cabin hotel, located in the midts of the Italian Dolomites, surrounded by beautiful mountains and dark forests.",
+    "Luxurious cabin hotel, located right in the heart of the Italian Dolomites, surrounded by beautiful mountains and dark forests.",
 };
 
 interface RootLayoutProps {
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <Header />
         <div className="flex-1 px-8 py-12">
-          <main className="max-w-7xl mx-auto ">{children}</main>
+          <main className="max-w-7xl mx-auto">{children}</main>
         </div>
       </body>
     </html>
