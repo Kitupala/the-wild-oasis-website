@@ -2,6 +2,9 @@ import CabinList from "@/app/_components/CabinList";
 import Spinner from "@/app/_components/Spinner";
 import { Suspense } from "react";
 
+// to revalidate data in cache @ route level / seconds
+export const revalidate = 3600;
+
 export const metadata = {
   title: "Cabins",
 };
