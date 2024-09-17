@@ -2,10 +2,10 @@
 
 import CabinCard from "@/app/_components/CabinCard";
 import { getCabins } from "@/app/_lib/data-service";
-import { Cabin, CabinFilter } from "@/app/types/cabin";
+import { Cabin, CabinCapacityFilter } from "@/app/types/cabin";
 
 interface CabinListProps {
-  filter: CabinFilter;
+  filter: CabinCapacityFilter;
 }
 
 async function CabinList({ filter }: CabinListProps) {
@@ -14,11 +14,12 @@ async function CabinList({ filter }: CabinListProps) {
 
   if (!cabins.length) return null;
 
-  const filters: Record<CabinFilter, (cabin: Cabin) => boolean> = {
-    all: () => true,
-    small: (cabin: Cabin) => cabin.maxCapacity <= 3,
-    medium: (cabin: Cabin) => cabin.maxCapacity >= 4 && cabin.maxCapacity <= 7,
-    large: (cabin: Cabin) => cabin.maxCapacity >= 8,
+  const filters: Record<CabinCapacityFilter, (cabin: Cabin) => boolean> = {
+    [CabinCapacityFilter.All]: () => true,
+    [CabinCapacityFilter.Small]: (cabin: Cabin) => cabin.maxCapacity <= 3,
+    [CabinCapacityFilter.Medium]: (cabin: Cabin) =>
+      cabin.maxCapacity >= 4 && cabin.maxCapacity <= 7,
+    [CabinCapacityFilter.Large]: (cabin: Cabin) => cabin.maxCapacity >= 8,
   };
 
   const displayedCabins = cabins.filter(filters[filter]);

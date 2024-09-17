@@ -1,7 +1,9 @@
+import { CabinCapacityFilter } from "@/app/types/cabin";
+
 interface CabinFilterButtonProps {
-  filter: string;
-  activeFilter: string;
-  handleFilter: (filter: string) => void;
+  filter: CabinCapacityFilter;
+  activeFilter: CabinCapacityFilter;
+  handleFilter: (filter: CabinCapacityFilter) => void;
   children: React.ReactNode;
 }
 

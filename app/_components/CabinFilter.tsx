@@ -2,15 +2,18 @@
 
 import CabinFilterButton from "@/app/_components/CabinFilterButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { CabinCapacityFilter } from "@/app/types/cabin";
 
 function CabinFilter() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const activeFilter = searchParams.get("capacity") ?? "";
+  const activeFilter =
+    (searchParams.get("capacity") as CabinCapacityFilter) ??
+    CabinCapacityFilter.All;
 
-  function handleFilter(filter: string) {
+  function handleFilter(filter: CabinCapacityFilter) {
     const params = new URLSearchParams(searchParams);
     params.set("capacity", filter);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
@@ -19,7 +22,7 @@ function CabinFilter() {
   return (
     <div className="border border-primary-800 flex">
       <CabinFilterButton
-        filter="all"
+        filter={CabinCapacityFilter.All}
         handleFilter={handleFilter}
         activeFilter={activeFilter}
       >
@@ -27,7 +30,7 @@ function CabinFilter() {
       </CabinFilterButton>
 
       <CabinFilterButton
-        filter="small"
+        filter={CabinCapacityFilter.Small}
         handleFilter={handleFilter}
         activeFilter={activeFilter}
       >
@@ -35,7 +38,7 @@ function CabinFilter() {
       </CabinFilterButton>
 
       <CabinFilterButton
-        filter="medium"
+        filter={CabinCapacityFilter.Medium}
         handleFilter={handleFilter}
         activeFilter={activeFilter}
       >
@@ -43,7 +46,7 @@ function CabinFilter() {
       </CabinFilterButton>
 
       <CabinFilterButton
-        filter="large"
+        filter={CabinCapacityFilter.Large}
         handleFilter={handleFilter}
         activeFilter={activeFilter}
       >
