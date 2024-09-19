@@ -30,10 +30,40 @@
   }
 }
 
-/* For data picker */
-.rdp {
-  --rdp-cell-size: 32px !important;
+/* For react-day-picker */
+.rdp-root {
+  --rdp-dropdown-gap: 15px !important;
+  --rdp-month_caption-font: "Josefin Sans", sans-serif;
+  --rdp-day-height: 40px !important;
+  --rdp-day-width: 40px !important;
   --rdp-accent-color: theme("colors.accent.500") !important;
-  --rdp-background-color: theme("colors.accent.600") !important;
+  --rdp-accent-background-color: theme("colors.accent.600") !important;
+  --rdp-range_middle-background-color: theme("colors.accent.400") !important;
   margin: 0 !important;
+}
+
+.rdp-month_caption {
+  font-size: 1.25rem;
+}
+
+/* Hover effect for the day cells */
+.rdp-day:hover {
+  background-color: theme("colors.accent.500") !important;
+  color: theme("colors.primary.900") !important;
+  border-radius: 50%;
+}
+.rdp-day.rdp-selected:hover {
+  background-color: theme("colors.accent.400") !important;
+  color: theme("colors.primary.900") !important;
+}
+.rdp-day.rdp-range_middle.rdp-selected:hover {
+  /* background-color: theme("colors.accent.400") !important;
+  color: theme("colors.primary.900") !important; */
+  border-radius: 0%;
+}
+.rdp-day.rdp-range_start.rdp-selected {
+  border-radius: 50% 0 0 50%;
+}
+.rdp-day.rdp-range_end.rdp-selected {
+  border-radius: 0 50% 50% 0;
 }
