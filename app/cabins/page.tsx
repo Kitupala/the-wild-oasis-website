@@ -1,15 +1,35 @@
+import CabinFilter from "@/app/_components/CabinFilter";
 import CabinList from "@/app/_components/CabinList";
 import Spinner from "@/app/_components/Spinner";
 import { Suspense } from "react";
+import { CabinCapacityFilter } from "@/app/types/cabin";
+import ReservationReminder from "../_components/ReservationReminder";
 
-// to revalidate data in cache @ route level / seconds
-export const revalidate = 3600;
+// * To revalidate data in cache @ route level / seconds *
+// * Useless since searchParams switches page into dynamic rendering*
+// export const revalidate = 3600;
 
 export const metadata = {
   title: "Cabins",
 };
 
-export default function Page() {
+interface PageProps {
+  searchParams: Record<string, string | undefined>;
+}
+
+const isValidCabinFilter = (
+  filter: string | undefined
+): filter is CabinCapacityFilter => {
+  return Object.values(CabinCapacityFilter).includes(
+    filter as CabinCapacityFilter
+  );
+};
+
+export default function Page({ searchParams }: PageProps) {
+  const filter: CabinCapacityFilter = isValidCabinFilter(searchParams?.capacity)
+    ? (searchParams.capacity as CabinCapacityFilter)
+    : CabinCapacityFilter.All;
+
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -23,8 +43,15 @@ export default function Page() {
         home away from home. The perfect spot for a peaceful, calm vacation.
         Welcome to paradise.
       </p>
-      <Suspense fallback={<Spinner text="Loading cabin data..." />}>
-        <CabinList />
+      <div className="flex justify-end mb-8">
+        <CabinFilter />
+      </div>
+      <Suspense
+        fallback={<Spinner text="Loading cabin data..." />}
+        key={filter}
+      >
+        <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );
