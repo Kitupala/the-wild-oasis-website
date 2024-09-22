@@ -3,6 +3,7 @@ import CabinList from "@/app/_components/CabinList";
 import Spinner from "@/app/_components/Spinner";
 import { Suspense } from "react";
 import { CabinCapacityFilter } from "@/app/types/cabin";
+import ReservationReminder from "../_components/ReservationReminder";
 
 // * To revalidate data in cache @ route level / seconds *
 // * Useless since searchParams switches page into dynamic rendering*
@@ -50,6 +51,7 @@ export default function Page({ searchParams }: PageProps) {
         key={filter}
       >
         <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );
