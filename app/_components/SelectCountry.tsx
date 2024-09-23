@@ -1,7 +1,7 @@
 import { getCountries } from "@/app/_lib/data-service";
 
 interface SelectCountryProps {
-  defaultCountry: string;
+  defaultCountry: string | undefined;
   name: string;
   id: string;
   className: string;
@@ -15,7 +15,9 @@ async function SelectCountry({
 }: SelectCountryProps) {
   const countries = await getCountries();
   const flag =
-    countries.find((country: { name: string; }) => country.name === defaultCountry)?.flag ?? "";
+    countries.find(
+      (country: { name: string }) => country.name === defaultCountry
+    )?.flag ?? "";
 
   return (
     <select

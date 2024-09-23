@@ -1,20 +1,28 @@
 "use client";
 
+import { updateGuestProfile } from "@/app/_lib/actions";
+import { Guest } from "@/app/types/guest";
 import { useState } from "react";
 
 interface UpdateProfileFormProps {
   children: React.ReactNode;
+  guest: Guest;
 }
-function UpdateProfileForm({ children }: UpdateProfileFormProps) {
+function UpdateProfileForm({ children, guest }: UpdateProfileFormProps) {
   const [counter, setCounter] = useState();
-  const countryFlag = "pt.jpg";
+  const { id, fullName, email, nationalID, nationality, countryFlag } = guest;
 
   return (
-    <form className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
+    <form
+      action={updateGuestProfile}
+      className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
+    >
       <div className="space-y-2">
         <label>Full name</label>
         <input
           disabled
+          name="fullName"
+          defaultValue={fullName}
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
         />
       </div>
@@ -23,6 +31,8 @@ function UpdateProfileForm({ children }: UpdateProfileFormProps) {
         <label>Email address</label>
         <input
           disabled
+          name="email"
+          defaultValue={email}
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
         />
       </div>
@@ -43,6 +53,7 @@ function UpdateProfileForm({ children }: UpdateProfileFormProps) {
         <label htmlFor="nationalID">National ID number</label>
         <input
           name="nationalID"
+          defaultValue={nationalID}
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
         />
       </div>

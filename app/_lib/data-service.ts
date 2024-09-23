@@ -53,7 +53,7 @@ export const getCabins = async function () {
 };
 
 // Guests are uniquely identified by their email address
-export async function getGuest(email: string) {
+export async function getGuest(email: string | undefined | null) {
   const { data, error } = await supabase
     .from("guests")
     .select("*")
@@ -188,17 +188,7 @@ export async function createGuest(newGuest: {
 
 // The updatedFields is an object which should ONLY contain the updated data
 // export async function updateGuest(id, updatedFields) {
-//   const { data, error } = await supabase
-//     .from("guests")
-//     .update(updatedFields)
-//     .eq("id", id)
-//     .select()
-//     .single();
 
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Guest could not be updated");
-//   }
 //   return data;
 // }
 
