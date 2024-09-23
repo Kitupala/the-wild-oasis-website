@@ -1,6 +1,7 @@
 // Module to define and export server actions
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 
@@ -27,6 +28,8 @@ export async function updateGuestProfile(formData: FormData) {
     .eq("id", session.user.guestId);
 
   if (error) throw new Error("Guest could not be updated");
+
+  revalidatePath("/account/profile");
 }
 
 export async function signInAction() {
