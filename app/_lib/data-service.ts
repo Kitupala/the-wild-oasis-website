@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { notFound } from "next/navigation";
 import { supabase } from "./supabase";
 import { eachDayOfInterval } from "date-fns";
+import { Booking } from "../types/booking";
 
 /////////////
 // GET
@@ -79,7 +79,9 @@ export async function getBooking(id: number) {
   return data;
 }
 
-export async function getBookings(guestId: number) {
+export async function getBookings(
+  guestId: number | undefined
+): Promise<Booking[]> {
   const { data, error, count } = await supabase
     .from("bookings")
     // We actually also need data on the cabins as well. But let's ONLY take the data that we actually need, in order to reduce downloaded data.
@@ -94,20 +96,20 @@ export async function getBookings(guestId: number) {
     throw new Error("Bookings could not get loaded");
   }
 
-  return data;
+  return data as unknown as Booking[];
 }
 
 export async function getBookedDatesByCabinId(cabinId: number) {
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
-  const todayAsString = today.toISOString();
+  // const todayAsString = today.toISOString();
 
   // Getting all bookings
   const { data, error } = await supabase
     .from("bookings")
     .select("*")
     .eq("cabinId", cabinId)
-    .or(`startDate.gte.${todayAsString},status.eq.checked-in`);
+    .or(`startDate.gte.${today.toISOString()},status.eq.checked-in`);
 
   if (error) {
     console.error(error);
