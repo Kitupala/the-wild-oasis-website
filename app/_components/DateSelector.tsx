@@ -1,13 +1,12 @@
 "use client";
 
-import "react-day-picker/style.css";
 import "@/app/_styles/globals.css";
+import "react-day-picker/style.css";
 
-import { isWithinInterval } from "date-fns";
-import { DayPicker, getDefaultClassNames } from "react-day-picker";
-import type { PropsBase } from "react-day-picker";
 import { Cabin } from "@/app/types/cabin";
 import { Settings } from "@/app/types/settings";
+import { differenceInDays, isWithinInterval } from "date-fns";
+import { DateRange, DayPicker } from "react-day-picker";
 import { useReservation } from "./ReservationContext";
 
 interface DateSelectorProps {
@@ -16,28 +15,37 @@ interface DateSelectorProps {
   cabin: Cabin;
 }
 
-function isAlreadyBooked(range: { from: Date; to: Date }, datesArr: Date[]) {
+function isAlreadyBooked(range: DateRange | undefined, datesArr: Date[]) {
   return (
-    range.from &&
+    range?.from &&
     range.to &&
     datesArr.some((date) =>
-      isWithinInterval(date, { start: range.from, end: range.to })
+      isWithinInterval(date, {
+        start: range.from as Date,
+        end: range.to as Date,
+      })
     )
   );
 }
 
 function DateSelector({ settings, bookedDates, cabin }: DateSelectorProps) {
-  const defaultClassNames = getDefaultClassNames();
   const { range, setRange, resetRange } = useReservation();
+  const displayRange: DateRange | null | undefined = isAlreadyBooked(
+    range,
+    bookedDates
+  )
+    ? null
+    : range;
 
   const today = new Date();
-  // CHANGE
-  const regularPrice = 23;
-  const discount = 23;
-  const numNights = 23;
-  const cabinPrice = 23;
+  const { regularPrice, discount } = cabin;
 
-  // SETTINGS
+  const numNights =
+    !displayRange?.from || !displayRange?.to
+      ? 0
+      : differenceInDays(displayRange.to, displayRange.from);
+
+  const cabinPrice = numNights * (regularPrice - discount);
   const { minBookingLength, maxBookingLength } = settings;
 
   return (
@@ -46,7 +54,7 @@ function DateSelector({ settings, bookedDates, cabin }: DateSelectorProps) {
         className="pt-8 place-self-center"
         mode="range"
         onSelect={setRange}
-        selected={range}
+        selected={displayRange as DateRange}
         classNames={{}}
         min={minBookingLength}
         max={maxBookingLength}
@@ -54,8 +62,7 @@ function DateSelector({ settings, bookedDates, cabin }: DateSelectorProps) {
         endMonth={new Date(2028, 11)}
         captionLayout="dropdown"
         showOutsideDays
-        disabled={{ before: today }}
-        // numberOfMonths={2}
+        disabled={[{ before: today }, ...Object.values(bookedDates)]}
       />
 
       <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
