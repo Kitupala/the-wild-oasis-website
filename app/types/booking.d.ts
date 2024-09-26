@@ -5,9 +5,9 @@ interface CabinSummary {
 
 export interface Booking {
   id: number;
-  created_at: string;
-  startDate: string;
-  endDate: string;
+  created_at: Date;
+  startDate: Date;
+  endDate: Date;
   numNights: number;
   numGuests: number;
   totalPrice: number;
@@ -15,4 +15,12 @@ export interface Booking {
   cabinId: number;
   cabins: CabinSummary;
   observations?: string;
+}
+
+export interface BookingData {
+  startDate: string | null;
+  endDate: string | null;
+  numNights: number;
+  cabinPrice: number;
+  cabinId: number;
 }
