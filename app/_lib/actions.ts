@@ -1,11 +1,12 @@
 // Module to define and export server actions
 "use server";
 
+import { BookingData } from "@/app/types/booking";
 import { revalidatePath } from "next/cache";
-import { auth, signIn, signOut } from "./auth";
-import { supabase } from "./supabase";
-import { getBookings } from "./data-service";
 import { redirect } from "next/navigation";
+import { auth, signIn, signOut } from "./auth";
+import { getBookings } from "./data-service";
+import { supabase } from "./supabase";
 
 export async function updateGuestProfile(formData: FormData) {
   const session = await auth();
@@ -24,7 +25,7 @@ export async function updateGuestProfile(formData: FormData) {
 
   const updatedData = { nationality, nationalID, countryFlag };
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("guests")
     .update(updatedData)
     .eq("id", session.user.guestId);
@@ -32,6 +33,37 @@ export async function updateGuestProfile(formData: FormData) {
   if (error) throw new Error("Guest could not be updated");
 
   revalidatePath("/account/profile");
+}
+
+export async function createReservation(
+  bookingData: BookingData,
+  formData: FormData
+) {
+  const session = await auth();
+  if (!session) throw new Error("You must be logged in to perfom this action");
+
+  const newBooking = {
+    ...bookingData,
+    guestId: session.user.guestId,
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations")?.slice(0, 1000),
+    extrasPrice: 0,
+    totalPrice: bookingData.cabinPrice,
+    status: "unconfirmed",
+    hasBreakfast: false,
+    isPaid: false,
+  };
+
+  // Object.entries(formData.entries());
+
+  const { error } = await supabase.from("bookings").insert([newBooking]);
+
+  if (error) {
+    throw new Error("Booking could not be created");
+  }
+
+  revalidatePath(`/cabins/${bookingData.cabinId}`);
+  redirect("/cabins/thankyou");
 }
 
 export async function deleteReservation(bookingId: number) {
