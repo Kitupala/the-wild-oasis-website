@@ -3,14 +3,14 @@
 import { useState } from "react";
 
 interface TextExpanderProps {
-  text: string;
+  text: string | undefined;
 }
 
 function TextExpander({ text }: TextExpanderProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const displayText = isExpanded
     ? text
-    : text.split(" ").slice(0, 40).join(" ") + "...";
+    : text?.split(" ").slice(0, 40).join(" ") + "...";
 
   return (
     <span>
