@@ -55,7 +55,6 @@ function DateSelector({ settings, bookedDates, cabin }: DateSelectorProps) {
         mode="range"
         onSelect={setRange}
         selected={displayRange as DateRange}
-        classNames={{}}
         min={minBookingLength}
         max={maxBookingLength}
         startMonth={new Date()}
