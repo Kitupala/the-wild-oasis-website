@@ -8,7 +8,7 @@ type Params = {
   params: CabinId;
 };
 
-export async function GET(_request: any, { params }: Params) {
+export async function GET(_request: Request, { params }: Params) {
   const { cabinId } = params;
 
   try {
