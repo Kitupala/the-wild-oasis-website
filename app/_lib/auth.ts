@@ -1,8 +1,6 @@
-import { NextRequest } from "next/server";
 import NextAuth, { DefaultSession, NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { createGuest, getGuest } from "./data-service";
-import { AdapterUser } from "next-auth/adapters";
 
 // Extend the session type to include `guestId`
 declare module "next-auth" {
@@ -21,10 +19,10 @@ const authConfig: NextAuthConfig = {
     }),
   ],
   callbacks: {
-    authorized({ auth, request }) {
+    authorized({ auth }) {
       return !!auth?.user;
     },
-    async signIn({ user, account, profile }) {
+    async signIn({ user }) {
       try {
         if (!user.email) {
           return false;
@@ -41,7 +39,7 @@ const authConfig: NextAuthConfig = {
         return false;
       }
     },
-    async session({ session, user }) {
+    async session({ session }) {
       const guest = await getGuest(session.user.email);
       session.user.guestId = guest.id;
       return session;
