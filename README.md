@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Wild Oasis website
+<a name="top"></a>
+![two_landing_page](https://github.com/user-attachments/assets/becd38a9-3413-44e2-940d-26b688f8354a "Landing page")  
 
-## Getting Started
+## Description
+Website is designed for customers to reserve cabins at the fictional Wild Oasis rental company. App uses [Supabase](https://supabase.com/) Open Source SQL Database. The authentication process is carried out using [Auth.js](https://authjs.dev/) (OAuth). This [Next.js](https://nextjs.org) project is part of the Udemy online course
+[`The Ultimate React Course 2024: React, Next.js, Redux & More`](https://www.udemy.com/course/the-ultimate-react-course/) _by_ Jonas Schmedtmann.
+Most of the components were pre-build and styled but the main goal was to study Next.js with the modern "app" router (with React Server Components and Server Actions). As an additional challenge, I implemented the project using [TypeScript](https://www.typescriptlang.org/).
 
-First, run the development server:
+## Tech Stack
+- [x] Next.js
+- [x] React
+- [x] TypeScript
+- [x] Supabase
+- [x] Auth.js
+- [x] [Tailwind CSS](https://tailwindcss.com/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
+The user can explore Cabins and About section as a guest. Logging in is essential for creating, modifying, or canceling the reservation.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![two_cabins](https://github.com/user-attachments/assets/5e525c7d-3ace-4362-9e1f-bf8f78e31b48 "Cabins page")  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![two_cabin](https://github.com/user-attachments/assets/acfc39a9-3109-40f4-a332-b19269162b74 "Cabin view")
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+![two_about](https://github.com/user-attachments/assets/8373383f-3703-4328-9edf-00daaac44ebe "About page")
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![two_reservations](https://github.com/user-attachments/assets/a4d0e94d-6e83-4662-a0f0-ed49e37126ff "Reservations view")
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[Back to top](#top)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
